@@ -18,10 +18,23 @@ def main():
 
     args = parser.parse_args()
 
-    # TODO: open args.filename and read it with csv.reader. The first row is the
-    #   header. Find the position of args.column within the header, then print every
-    #   data row (its values joined by commas) whose value in that column equals
-    #   args.value.
+import argparse
+import csv
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Print the rows of a CSV where a column has a given value."
+        )
+    parser.add_argument("filename", help="data")
+    parser.add_argument("column", help="age")
+    parser.add_argument("value", help="25")   
+
+    args = parser.parse_args()
+    with open(args.filename, newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row[args.column] == args.value:
+                print(",".join(row.values()))
 
 
 if __name__ == "__main__":
